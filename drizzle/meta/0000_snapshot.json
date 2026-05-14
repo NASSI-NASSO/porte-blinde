@@ -1,0 +1,560 @@
+{
+  "id": "00000000-0000-0000-0000-000000000000",
+  "prevId": "",
+  "version": "5",
+  "dialect": "mysql",
+  "tables": {
+    "carts": {
+      "name": "carts",
+      "columns": {
+        "id": {
+          "autoincrement": false,
+          "name": "id",
+          "type": "varchar(36)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "user_id": {
+          "autoincrement": false,
+          "name": "user_id",
+          "type": "varchar(36)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "created_at": {
+          "default": "'current_timestamp()'",
+          "autoincrement": false,
+          "name": "created_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true
+        }
+      },
+      "compositePrimaryKeys": {},
+      "indexes": {},
+      "foreignKeys": {},
+      "uniqueConstraints": {},
+      "checkConstraint": {}
+    },
+    "cart_items": {
+      "name": "cart_items",
+      "columns": {
+        "id": {
+          "autoincrement": false,
+          "name": "id",
+          "type": "varchar(36)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "cart_id": {
+          "autoincrement": false,
+          "name": "cart_id",
+          "type": "varchar(36)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "product_id": {
+          "autoincrement": false,
+          "name": "product_id",
+          "type": "varchar(36)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "quantity": {
+          "default": 1,
+          "autoincrement": false,
+          "name": "quantity",
+          "type": "int(11)",
+          "primaryKey": false,
+          "notNull": true
+        }
+      },
+      "compositePrimaryKeys": {},
+      "indexes": {},
+      "foreignKeys": {},
+      "uniqueConstraints": {},
+      "checkConstraint": {}
+    },
+    "categories": {
+      "name": "categories",
+      "columns": {
+        "id": {
+          "autoincrement": true,
+          "name": "id",
+          "type": "int(11)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "nom": {
+          "default": "'NULL'",
+          "autoincrement": false,
+          "name": "nom",
+          "type": "varchar(255)",
+          "primaryKey": false,
+          "notNull": false
+        }
+      },
+      "compositePrimaryKeys": {},
+      "indexes": {},
+      "foreignKeys": {},
+      "uniqueConstraints": {},
+      "checkConstraint": {}
+    },
+    "orders": {
+      "name": "orders",
+      "columns": {
+        "id": {
+          "autoincrement": true,
+          "name": "id",
+          "type": "int(11)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "user_id": {
+          "default": "'NULL'",
+          "autoincrement": false,
+          "name": "user_id",
+          "type": "int(11)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "total_price": {
+          "default": "'NULL'",
+          "autoincrement": false,
+          "name": "total_price",
+          "type": "int(11)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "status": {
+          "default": "'NULL'",
+          "autoincrement": false,
+          "name": "status",
+          "type": "varchar(50)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "created_at": {
+          "default": "'current_timestamp()'",
+          "autoincrement": false,
+          "name": "created_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true
+        }
+      },
+      "compositePrimaryKeys": {},
+      "indexes": {
+        "user_id": {
+          "name": "user_id",
+          "columns": [
+            "user_id"
+          ],
+          "isUnique": false
+        }
+      },
+      "foreignKeys": {
+        "orders_ibfk_1": {
+          "name": "orders_ibfk_1",
+          "tableFrom": "orders",
+          "tableTo": "users",
+          "columnsFrom": [
+            "user_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "restrict",
+          "onUpdate": "restrict"
+        }
+      },
+      "uniqueConstraints": {},
+      "checkConstraint": {}
+    },
+    "order_items": {
+      "name": "order_items",
+      "columns": {
+        "id": {
+          "autoincrement": true,
+          "name": "id",
+          "type": "int(11)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "order_id": {
+          "default": "'NULL'",
+          "autoincrement": false,
+          "name": "order_id",
+          "type": "int(11)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "product_id": {
+          "default": "'NULL'",
+          "autoincrement": false,
+          "name": "product_id",
+          "type": "int(11)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "quantity": {
+          "autoincrement": false,
+          "name": "quantity",
+          "type": "int(11)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "price": {
+          "autoincrement": false,
+          "name": "price",
+          "type": "decimal(10,2)",
+          "primaryKey": false,
+          "notNull": true
+        }
+      },
+      "compositePrimaryKeys": {},
+      "indexes": {
+        "order_id": {
+          "name": "order_id",
+          "columns": [
+            "order_id"
+          ],
+          "isUnique": false
+        },
+        "product_id": {
+          "name": "product_id",
+          "columns": [
+            "product_id"
+          ],
+          "isUnique": false
+        }
+      },
+      "foreignKeys": {
+        "order_items_ibfk_1": {
+          "name": "order_items_ibfk_1",
+          "tableFrom": "order_items",
+          "tableTo": "orders",
+          "columnsFrom": [
+            "order_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "restrict",
+          "onUpdate": "restrict"
+        },
+        "order_items_ibfk_2": {
+          "name": "order_items_ibfk_2",
+          "tableFrom": "order_items",
+          "tableTo": "products",
+          "columnsFrom": [
+            "product_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "restrict",
+          "onUpdate": "restrict"
+        }
+      },
+      "uniqueConstraints": {},
+      "checkConstraint": {}
+    },
+    "payments": {
+      "name": "payments",
+      "columns": {
+        "id": {
+          "autoincrement": true,
+          "name": "id",
+          "type": "int(11)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "order_id": {
+          "default": "'NULL'",
+          "autoincrement": false,
+          "name": "order_id",
+          "type": "int(11)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "montant": {
+          "default": "'NULL'",
+          "autoincrement": false,
+          "name": "montant",
+          "type": "decimal(10,2)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "methode": {
+          "default": "'NULL'",
+          "autoincrement": false,
+          "name": "methode",
+          "type": "varchar(50)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "statut": {
+          "default": "'NULL'",
+          "autoincrement": false,
+          "name": "statut",
+          "type": "varchar(50)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "created_at": {
+          "default": "'current_timestamp()'",
+          "autoincrement": false,
+          "name": "created_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true
+        }
+      },
+      "compositePrimaryKeys": {},
+      "indexes": {
+        "order_id": {
+          "name": "order_id",
+          "columns": [
+            "order_id"
+          ],
+          "isUnique": false
+        }
+      },
+      "foreignKeys": {
+        "payments_ibfk_1": {
+          "name": "payments_ibfk_1",
+          "tableFrom": "payments",
+          "tableTo": "orders",
+          "columnsFrom": [
+            "order_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "restrict",
+          "onUpdate": "restrict"
+        }
+      },
+      "uniqueConstraints": {},
+      "checkConstraint": {}
+    },
+    "products": {
+      "name": "products",
+      "columns": {
+        "id": {
+          "autoincrement": true,
+          "name": "id",
+          "type": "int(11)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "name": {
+          "default": "'NULL'",
+          "autoincrement": false,
+          "name": "name",
+          "type": "varchar(255)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "description": {
+          "default": "'NULL'",
+          "autoincrement": false,
+          "name": "description",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "price": {
+          "default": "'NULL'",
+          "autoincrement": false,
+          "name": "price",
+          "type": "int(11)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "image": {
+          "default": "'NULL'",
+          "autoincrement": false,
+          "name": "image",
+          "type": "varchar(255)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "stock": {
+          "default": "'NULL'",
+          "autoincrement": false,
+          "name": "stock",
+          "type": "int(11)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "categorie_id": {
+          "default": "'NULL'",
+          "autoincrement": false,
+          "name": "categorie_id",
+          "type": "int(11)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "created_at": {
+          "default": "'current_timestamp()'",
+          "autoincrement": false,
+          "name": "created_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true
+        }
+      },
+      "compositePrimaryKeys": {},
+      "indexes": {},
+      "foreignKeys": {
+        "fk_product_category": {
+          "name": "fk_product_category",
+          "tableFrom": "products",
+          "tableTo": "categories",
+          "columnsFrom": [
+            "categorie_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "cascade"
+        }
+      },
+      "uniqueConstraints": {},
+      "checkConstraint": {}
+    },
+    "product_images": {
+      "name": "product_images",
+      "columns": {
+        "id": {
+          "autoincrement": true,
+          "name": "id",
+          "type": "int(11)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "product_id": {
+          "default": "'NULL'",
+          "autoincrement": false,
+          "name": "product_id",
+          "type": "int(11)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "image_url": {
+          "default": "'NULL'",
+          "autoincrement": false,
+          "name": "image_url",
+          "type": "varchar(255)",
+          "primaryKey": false,
+          "notNull": false
+        }
+      },
+      "compositePrimaryKeys": {},
+      "indexes": {
+        "product_id": {
+          "name": "product_id",
+          "columns": [
+            "product_id"
+          ],
+          "isUnique": false
+        }
+      },
+      "foreignKeys": {
+        "product_images_ibfk_1": {
+          "name": "product_images_ibfk_1",
+          "tableFrom": "product_images",
+          "tableTo": "products",
+          "columnsFrom": [
+            "product_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "restrict",
+          "onUpdate": "restrict"
+        }
+      },
+      "uniqueConstraints": {},
+      "checkConstraint": {}
+    },
+    "users": {
+      "name": "users",
+      "columns": {
+        "id": {
+          "autoincrement": true,
+          "name": "id",
+          "type": "int(11)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "name": {
+          "default": "'NULL'",
+          "autoincrement": false,
+          "name": "name",
+          "type": "varchar(255)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "email": {
+          "default": "'NULL'",
+          "autoincrement": false,
+          "name": "email",
+          "type": "varchar(255)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "password": {
+          "default": "'NULL'",
+          "autoincrement": false,
+          "name": "password",
+          "type": "varchar(255)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "adresse": {
+          "default": "'NULL'",
+          "autoincrement": false,
+          "name": "adresse",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "role": {
+          "default": "'''user'''",
+          "autoincrement": false,
+          "name": "role",
+          "type": "varchar(50)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "created_at": {
+          "default": "'current_timestamp()'",
+          "autoincrement": false,
+          "name": "created_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true
+        }
+      },
+      "compositePrimaryKeys": {},
+      "indexes": {},
+      "foreignKeys": {},
+      "uniqueConstraints": {},
+      "checkConstraint": {}
+    }
+  },
+  "views": {},
+  "_meta": {
+    "schemas": {},
+    "tables": {},
+    "columns": {}
+  },
+  "internal": {
+    "tables": {},
+    "indexes": {}
+  }
+}
